@@ -1,0 +1,75 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyURL</title>
+</head>
+<body>
+    <h1>Shorten Long URL</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL">
+    <br>
+    <button onClick="handleSubmit()">Submit URL</button>
+     <br>
+     <h1>Your Shorturl</h1>
+     <input type="text" id="result" readonly>
+</body>
+<script>
+    function handleSubmit() {
+  const inputField = document.getElementById('urlInput');
+  const url = inputField.value;
+  const resultField = document.getElementById('result');
+  
+  if (url) {
+    resultField.value = `Submitted URL: ${shortUid}`;
+  } else {
+    resultField.value = "Please enter a valid URL!";
+  }
+}
+</script>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+</head>
+<body>
+  <h1>URL Shortener</h1>
+
+  <!-- Input field for entering the long URL -->
+  <label for="urlInput">Enter URL:</label>
+  <input type="text" id="urlInput" placeholder="Enter your URL">
+  <button onclick="shortenUrl()">Shorten URL</button>
+
+  <h2>Shortened URL</h2>
+  <input type="text" id="shortUrl" readonly>
+
+  <script>
+    // Function to handle the URL shortening
+    function shortenUrl() {
+      const url = document.getElementById('urlInput').value;
+
+      // Make a POST request to the /shorten route
+      fetch('/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ originalUrl: url }),  // Send the original URL
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Display the shortened URL in the result field
+        document.getElementById('shortUrl').value = data.shortUrl;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
